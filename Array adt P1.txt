@@ -1,0 +1,335 @@
+#include<stdio.h>
+#include<stdlib.h>
+void creation(int *);
+void traverse(int *);
+void insert(int *);
+void delete1(int *);
+void sort(int *);
+void merge(int *,int );
+void copy(int *);
+void search(int *);
+int length(int *);
+void check(int *);
+int main()
+{
+ int s,a[100],l;
+ a[0]=-99;
+ printf("                   ***************************************WELCOME***************************************               \n");
+ printf("Please Select the Operation to be performed:-\n1. Creation of an array.\n2. Transversal of an array.\n3. Insertion of an Element.\n4. Deletion of an Element.\n5. Sorting of array.\n6. Merging of array.\n7. Copying the given array.\n8. Searching any Element.\n9. Length of array.\n10.Checking whether array is full or empty");
+ while(s!='0')
+ {
+  printf("\n\nEnter your choice[1-10] or 0 for exit : ");
+  scanf("%d",&s);
+  switch(s)
+  {
+   case 0:
+          printf("          *******************************EXIT*******************************             ");
+          exit(0);
+   case 1:
+          creation(a);
+          break;
+   case 2:
+          traverse(a);
+          break;
+   case 3:
+          insert(a);
+          break;
+   case 4:
+          delete1(a);
+          break;
+   case 5:
+          sort(a);
+          break;
+   case 6:
+          merge(a,l);
+          break;
+   case 7:
+          copy(a);
+          break;
+   case 8:
+          search(a);
+          break;
+   case 9:
+          l=length(a);
+          printf("The Length of the array is %d.",l);
+          break;
+   case 10:
+          check(a);
+          break;
+   default:
+           printf("Invalid Choice");
+  }
+ }
+}
+void creation(int *a)
+{
+ int n,i,l,flag=0;
+ l=length(a);
+ if(l>=10)
+ {
+  for(i=0;i<=9;i++)
+  {
+   if(a[i]!=-99)
+   {
+    flag=1;
+   }
+  }
+   if(flag==1)
+   {
+    printf("Array Full.");
+   }
+ }
+ else
+ {
+  printf("Enter the size of the array (<=10): ");
+  scanf("%d",&n);
+  if(n + l>10)
+  {
+   printf("Array can have only %d Element/s more.",10-l);
+  }
+  else
+  {
+   if(n==0)
+   {
+    printf("Please have atleast one Element.");
+   }
+   else
+   {
+    for(i=l;i<l+n;i++)
+    {
+     printf("Enter the %d Element of the array:",i+1);
+     scanf("%d",&a[i]);
+    }
+    a[i]=-99;
+    printf("\n\nArray Created\n\n");
+   }
+  }
+ }
+}
+void traverse(int a[])
+{
+ int i=0;
+ printf("\n");
+ if(a[0]==-99)
+ {
+  printf("The Array is Empty.");
+ }
+ else
+ {
+  while(a[i]!=-99)
+  {
+   printf(" %d ",a[i]);
+   i++;
+  }
+ }
+}
+void insert(int a[])
+{
+ int i,j,k,l;
+ l=length(a);
+ if(l>=10)
+ {
+  printf("Array Full.");
+ }
+ else
+ {
+  if(a[0]==-99)
+  {
+    printf("Enter the value of the Element:");
+    scanf("%d",&k);
+    a[0]=k;
+    a[1]=-99;
+    printf(" %d ",a[0]);
+    printf("\n\nElement Inserted\n\n");
+  }
+  else
+  {
+   printf("Enter the position to be inserted:");
+   scanf("%d",&j);
+   if(j==0)
+   {
+    printf("Enter the value of the Element:");
+    scanf("%d",&k);
+    for(i=l;i>=j-1;i--)
+    {
+     a[i+1]=a[i];
+    }
+    a[j]=k;
+    traverse(a);
+   }
+   else
+   {
+    if(j<0 || j>l)
+    {
+     printf("Please Enter the position between 0 to %d.",l);
+    }
+    else
+    {
+     printf("Enter the value of the Element:");
+     scanf("%d",&k);
+     for(i=l;i>=j-1;i--)
+     {
+      a[i+1]=a[i];
+     }
+     a[j]=k;
+     for(i=0;i<=l;i++)
+     {
+      printf(" %d ",a[i]);
+     }
+     printf("\n\nElement Inserted\n\n");
+    }
+   }
+  }
+ }
+}
+void delete1(int a[])
+{
+ int i,j,l;
+ printf("Enter the Position of Array to be deleted:");
+ scanf("%d",&j);
+ l=length(a);
+ if(j<0 || j>l-1)
+ {
+  printf("Please Enter the Position between 0 and %d.",l-1);
+ }
+ else
+ {
+  i=j;
+  while(a[i]!=-99)
+  {
+   a[i]=a[i+1];
+   i++;
+  }
+  a[i]=-99;
+  traverse(a);
+  printf("\n\nElement Deleted\n\n");
+ }
+}
+void sort(int a[])
+{
+ int l,i,j,t;
+ l=length(a);
+ for(i=0;i<l-1;i++)
+ {
+  for(j=i;j<=l-1;j++)
+  {
+   if(a[i]>a[j])
+   {
+    t=a[i];
+    a[i]=a[j];
+    a[j]=t;
+   }
+  }
+ }
+ printf("\n\nSorted Array is ");
+ traverse(a);
+}
+void merge(int a[],int l)
+{
+ int b[100],i,size,j;
+ l=length(a);
+ printf("Enter the size of matrix B[<100]:");
+ scanf("%d",&size);
+ if(size+l>100)
+ {
+  printf("The array can have only %d more Element/s.",100-l);
+ }
+ else
+ {
+  for(i=0;i<size;i++)
+  {
+   printf("Enter the %d Element:",i+1);
+   scanf("%d",&b[i]);
+  }
+  b[i]=-99;
+  i=0;
+  l=length(a);
+  for(j=l;j<l+size;j++)
+  {
+   if(b[i]!=-99)
+   {
+    a[j]=b[i];
+    i++;
+   }
+   else
+   {
+    break;
+   }
+  }
+  a[j]=-99;
+  i=0;
+  printf("The Merged Array is\n");
+  while(a[i]!=-99)
+  {
+   printf(" %d ",a[i]);
+   i++;
+  }
+ }
+}
+void copy(int a[])
+{
+ int b[100],i,l;
+ l=length(a);
+ for(i=0;i<l;i++)
+ {
+  b[i]=a[i];
+ }
+ b[i]=-99;
+ i=0;
+ while(b[i]!=-99)
+ {
+  printf("  %d  ",b[i]);
+  i++;
+ }
+ printf("\n\nArray Copied\n\n");
+}
+int length(int a[])
+{
+ int c=0;
+ while(a[c]!=-99)
+ {
+  c++;
+ }
+ return c;
+}
+void search(int a[])
+{
+ int f=0,e,mid,s;
+ e=length(a)-1;
+ printf("Enter the element to be searched:");
+ scanf("%d",&s);
+ while(f<=e)
+ {
+  mid=(f+e)/2;
+  if(a[mid]<s)
+  {
+   f=mid+1;
+  }
+  else if(a[mid]>s)
+  {
+   e=mid-1;
+  }
+  else
+  {
+   printf("The Element is found.");
+   break;
+  }
+ }
+ if(f>e)
+ {
+  printf("The Element is not found.");
+ }
+}
+void check(int a[])
+{
+ int l;
+ l=length(a);
+ if(a[0]==-99)
+ {
+  printf("The Array is Empty.");
+ }
+ else
+ {
+  printf("The Array consists of %d Elements.",l);
+ }
+}
